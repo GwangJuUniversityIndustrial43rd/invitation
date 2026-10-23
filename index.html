@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#111820">
+<meta name="description" content="광주대학교 산업디자인학과 제43회 졸업전시회 DIRECTION 초청장">
+<title>DIRECTION | 졸업전시회 초청장</title>
+<style>
+  :root { color-scheme: dark; --bg:#111820; --panel:#1c2730; --text:#f5f7f8; --muted:#b9c5cc; }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; background:var(--bg); }
+  body { margin:0; font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif; color:var(--text); background:var(--bg); }
+  header { position:sticky; top:0; z-index:5; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:10px 14px; background:rgba(17,24,32,.94); backdrop-filter:blur(10px); border-bottom:1px solid rgba(255,255,255,.12); }
+  .brand { font-size:13px; letter-spacing:.08em; font-weight:700; }
+  .controls { display:flex; gap:8px; }
+  button { color:var(--text); background:var(--panel); border:1px solid #40505b; border-radius:999px; padding:8px 13px; font-size:13px; cursor:pointer; }
+  main { width:min(100%, 760px); margin:0 auto; padding:16px 12px 28px; }
+  .page { position:relative; margin:0 auto 18px; width:100%; line-height:0; box-shadow:0 8px 30px rgba(0,0,0,.28); }
+  .page img { display:block; width:100%; height:auto; }
+  .map-link { position:absolute; left:55.8%; top:78.1%; width:32.2%; height:16.5%; display:block; border-radius:2px; }
+  .map-link:focus-visible { outline:3px solid #fff; outline-offset:2px; }
+  footer { text-align:center; color:var(--muted); font-size:12px; padding:0 12px 24px; }
+  @media (min-width:600px) { main { padding-top:24px; } .page { margin-bottom:24px; } }
+  @media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">DIRECTION · GRADUATION EXHIBITION</div>
+  <nav class="controls" aria-label="초청장 페이지 이동">
+    <button type="button" id="prev" aria-label="첫 페이지로">이전</button>
+    <button type="button" id="next" aria-label="둘째 페이지로">다음</button>
+  </nav>
+</header>
+<main id="invitation">
+  <section class="page" id="page1" aria-label="초청장 1페이지">
+    <img src="assets/page-1.png" alt="DIRECTION 졸업전시회 초청장 첫 페이지. 개막식 2026년 11월 19일 오후 6시, 전시 일정 11월 19일부터 11월 27일까지, 광주대학교 극기관 1층 호심미술관.">
+    <a class="map-link" href="https://kko.to/fIbNd0JlVr" target="_blank" rel="noopener noreferrer" aria-label="카카오맵에서 전시장 위치 열기" title="카카오맵에서 전시장 위치 열기"></a>
+  </section>
+  <section class="page" id="page2" aria-label="초청장 2페이지">
+    <img src="assets/page-2.png" alt="DIRECTION 초청장 두 번째 페이지. 전시 소개, 4학년 졸업작품전, AR 콘텐츠 작품전, 2026 공모전 수상 작품전, 문의 연락처 안내.">
+  </section>
+</main>
+<footer>이미지를 좌우로 자르지 않고 화면 너비에 맞춰 표시합니다.</footer>
+<script>
+  const first = document.getElementById('page1');
+  const second = document.getElementById('page2');
+  document.getElementById('prev').addEventListener('click', () => first.scrollIntoView({behavior:'smooth', block:'start'}));
+  document.getElementById('next').addEventListener('click', () => second.scrollIntoView({behavior:'smooth', block:'start'}));
+  let startX = 0, startY = 0;
+  document.addEventListener('touchstart', e => { if (e.touches.length===1) { startX=e.touches[0].clientX; startY=e.touches[0].clientY; } }, {passive:true});
+  document.addEventListener('touchend', e => {
+    if (!e.changedTouches.length) return;
+    const dx=e.changedTouches[0].clientX-startX, dy=e.changedTouches[0].clientY-startY;
+    if (Math.abs(dx)>90 && Math.abs(dx)>Math.abs(dy)*1.4) {
+      const y=window.scrollY+window.innerHeight/2;
+      const onSecond=second.offsetTop < y;
+      if (dx<0 && !onSecond) second.scrollIntoView({behavior:'smooth',block:'start'});
+      else if (dx>0 && onSecond) first.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  }, {passive:true});
+</script>
+</body>
+</html>
